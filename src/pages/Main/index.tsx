@@ -19,21 +19,16 @@ export default function Main() {
     /([A-z])\w (M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$)/gm;
 
   function handleAdd() {
-    const m = newKingValidation.exec(newKing);
-
-    if (m !== null) {
-      setKing([...kings, newKing]);
-      setNewKing("");
-      setValid({
-        valid: true,
-        msg: "",
-      });
-    } else {
-      setValid({
-        valid: false,
-        msg: "Insira um nome de Rei Valido Ex: José IV",
-      });
-    }
+    const king = newKing;
+    // todo: better validation and multiple inputs
+    // if (newKing.includes(",")) {
+    //   const kingList = newKing.split(", ");
+    //   kingList.forEach((king) => {
+    //     setNewKingOnList(king);
+    //   });
+    //   return;
+    // }
+    setNewKingOnList(king);
   }
 
   function handleDelete(king: string) {
@@ -42,6 +37,23 @@ export default function Main() {
 
   function sortKings() {
     setKing(SortKings(kings));
+  }
+  function setNewKingOnList(name: string) {
+    const m = newKingValidation.exec(name);
+
+    if (m !== null) {
+      setKing([...kings, name]);
+      setNewKing("");
+      setValid({
+        valid: true,
+        msg: "",
+      });
+    } else {
+      setValid({
+        valid: false,
+        msg: "Insira um nome de Rei Valido Ex: Jhon IV",
+      });
+    }
   }
 
   useEffect(() => {
@@ -77,8 +89,8 @@ export default function Main() {
       <p className="validate">{validate.msg}</p>
 
       <List>
-        {kings.map((king) => (
-          <li key={king}>
+        {kings.map((king, index) => (
+          <li key={index}>
             <span>{king}</span>
             <Button className="delete" onClick={() => handleDelete(king)}>
               <FaMinus />
