@@ -77,7 +77,7 @@ export default function Main() {
       <Form>
         <input
           type="text"
-          placeholder="Ex: King III"
+          placeholder="Ex: King IV"
           value={newKing}
           onChange={(e) => setNewKing(e.target.value)}
         />
